@@ -33,7 +33,6 @@ const StockList = () => {
         `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false`
       )
       .then(function (response) {
-        // console.log(response);
         setData(response.data);
         console.log("data is ", data);
         setLoading(false);
@@ -42,10 +41,6 @@ const StockList = () => {
         console.log(error);
       });
   }, []);
-  console.log("data");
-  console.log(data);
-  console.log("loading");
-  console.log(loading);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>

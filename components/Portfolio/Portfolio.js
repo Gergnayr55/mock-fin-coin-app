@@ -17,7 +17,6 @@ const Portfolio = () => {
     axios
       .get(`https://api.coingecko.com/api/v3/coins/`)
       .then(function (response) {
-        // console.log(response);
         setData(response.data);
         console.log("data is ", data);
         setLoading(false);
@@ -26,8 +25,7 @@ const Portfolio = () => {
         console.log(error);
       });
   }, []);
-  console.log(data);
-  console.log(loading);
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <ScrollView style={{ flex: 1 }}>

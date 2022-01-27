@@ -17,7 +17,6 @@ import CurrencyInput from "react-native-currency-input";
 import StockChart from "../StockChart";
 const StockDetails = (id) => {
   const { stockDetails } = useContext(StockContext);
-  const [buttonType, setButtonType] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [value, setValue] = useState(null);
   console.log(stockDetails);
@@ -97,7 +96,6 @@ const StockDetails = (id) => {
           }}
           onPress={() => {
             console.log("trade button clicked");
-            setButtonType(["Buy", "Trade"]);
             setModalVisible(!modalVisible);
           }}
         >
@@ -186,49 +184,13 @@ const StockDetails = (id) => {
                   width: "100%",
                   height: 70,
                   color: "black",
-                  textAlignVertical: "top", // android fix for centering it at the top-left corner
                 }}
-                onChangeText={() => console.log("hi")}
+                onChangeText={() => console.log("changing text")}
               />
             </View>
           </View>
         </Modal>
       )}
-      {/* 
-       {buttonType.length !== 2 ? () : (
-        <View
-          style={{
-            width: "100%",
-            height: 40,
-            backgroundColor: "blue",
-            alignItems: "center",
-            justifyContent: "space-evenly",
-            position: "absolute",
-            flexDirection: "row",
-            flex: 1,
-            bottom: "91px",
-          }}
-        >
-          <Button
-            style={{ width: "50%" }}
-            color="blue"
-            title="Buy"
-            onPress={() => {
-              console.log("buy");
-              setModalVisible(!modalVisible)
-            }}
-          />
-          <Button
-            style={{ width: "50%" }}
-            color="blue"
-            title="Sell"
-            onPress={() => {
-              console.log("Sell");
-              setModalVisible(!modalVisible)
-            }}
-          />
-        </View>
-      )} */}
     </SafeAreaView>
   );
 };
