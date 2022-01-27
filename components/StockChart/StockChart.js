@@ -37,7 +37,7 @@ const StockChart = (data) => {
               labels: ["January", "February", "March", "April", "May", "June"],
               datasets: [
                 {
-                  data: data && data,
+                  data: [100, 110, 90, 130, 80, 103],
                 },
               ],
             }}
