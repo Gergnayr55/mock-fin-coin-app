@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import { Rect, Text as TextSVG, Svg } from "react-native-svg";
-const StockChart = () => {
+const StockChart = (data) => {
   const mockData = [
     Math.random() * 100,
     Math.random() * 100,
@@ -37,7 +37,7 @@ const StockChart = () => {
               labels: ["January", "February", "March", "April", "May", "June"],
               datasets: [
                 {
-                  data: [100, 110, 90, 130, 80, 103],
+                  data: data && data,
                 },
               ],
             }}

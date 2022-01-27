@@ -8,13 +8,7 @@ const Stack = createStackNavigator();
 const StockContainer = () => (
   <StockContextProvider>
     <Stack.Navigator>
-      <Stack.Screen
-        name="Coins"
-        component={StockList}
-        screenOptions={{
-          headerShown: false,
-        }}
-      />
+      <Stack.Screen name="Coins" component={StockList} />
       <Stack.Screen name="Details" component={StockDetails} />
     </Stack.Navigator>
   </StockContextProvider>

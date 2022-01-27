@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   Text,
   View,
@@ -7,12 +7,20 @@ import {
   SafeAreaView,
   Button,
   TouchableOpacity,
+  Modal,
+  TextInput,
+  Pressable,
 } from "react-native";
 import { StockContext } from "../State/StockContext";
 import { formatDecimals } from "../../helpers/helpers.js";
+import CurrencyInput from "react-native-currency-input";
+import StockChart from "../StockChart";
 const StockDetails = (id) => {
   const { stockDetails } = useContext(StockContext);
-
+  const [buttonType, setButtonType] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+  const [value, setValue] = useState(null);
+  console.log(stockDetails);
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <ScrollView style={{ flex: 1 }}>
@@ -56,7 +64,7 @@ const StockDetails = (id) => {
                     style={{
                       fontSize: 12,
                       color:
-                        stock?.price_change_percentage_24h < 0
+                        stockDetails?.price_change_percentage_24h < 0
                           ? "red"
                           : "black",
                     }}
@@ -69,7 +77,8 @@ const StockDetails = (id) => {
           </>
         </View>
       </ScrollView>
-      <TouchableOpacity
+
+      <View
         style={{
           width: "100%",
           height: 40,
@@ -79,12 +88,147 @@ const StockDetails = (id) => {
           position: "absolute",
           bottom: "91px",
         }}
-        onPress={() => {
-          console.log("trade button clicked");
-        }}
       >
-        <Text style={{ color: "white" }}> Trade</Text>
-      </TouchableOpacity>
+        <Pressable
+          style={{
+            width: "100%",
+            color: "blue",
+            textAlign: "center",
+          }}
+          onPress={() => {
+            console.log("trade button clicked");
+            setButtonType(["Buy", "Trade"]);
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <Text style={{ color: "white" }}>Trade</Text>
+        </Pressable>
+      </View>
+      {modalVisible && (
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: 22,
+            }}
+          >
+            <View
+              style={{
+                margin: 20,
+                backgroundColor: "white",
+                borderRadius: 20,
+                padding: 55,
+                alignItems: "center",
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 4,
+                elevation: 5,
+                justifyContent: "space-around",
+              }}
+            >
+              <Text
+                style={{
+                  color: "black",
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  margin: 20,
+                }}
+              >
+                Buy ${value || "0.00"}
+              </Text>
+              <CurrencyInput
+                style={{ padding: 10 }}
+                value={value}
+                onChangeValue={setValue}
+                unit="$"
+                delimiter=","
+                separator="."
+                precision={2}
+                onChangeText={(formattedValue) => {
+                  console.log(formattedValue);
+                }}
+              />
+              <Pressable
+                style={{
+                  width: "100%",
+                  textAlign: "center",
+                  margin: 20,
+                  borderRadius: 8,
+                  padding: 10,
+                  elevation: 2,
+                  backgroundColor: "blue",
+                }}
+                onPress={() => {
+                  console.log("buy button clicked");
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <Text style={{ color: "white" }}>Buy Now</Text>
+              </Pressable>
+
+              <TextInput
+                style={{
+                  flex: 1,
+                  width: "100%",
+                  height: 70,
+                  color: "black",
+                  textAlignVertical: "top", // android fix for centering it at the top-left corner
+                }}
+                onChangeText={() => console.log("hi")}
+              />
+            </View>
+          </View>
+        </Modal>
+      )}
+      {/* 
+       {buttonType.length !== 2 ? () : (
+        <View
+          style={{
+            width: "100%",
+            height: 40,
+            backgroundColor: "blue",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+            position: "absolute",
+            flexDirection: "row",
+            flex: 1,
+            bottom: "91px",
+          }}
+        >
+          <Button
+            style={{ width: "50%" }}
+            color="blue"
+            title="Buy"
+            onPress={() => {
+              console.log("buy");
+              setModalVisible(!modalVisible)
+            }}
+          />
+          <Button
+            style={{ width: "50%" }}
+            color="blue"
+            title="Sell"
+            onPress={() => {
+              console.log("Sell");
+              setModalVisible(!modalVisible)
+            }}
+          />
+        </View>
+      )} */}
     </SafeAreaView>
   );
 };
