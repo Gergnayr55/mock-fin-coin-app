@@ -1,114 +1,47 @@
-import React, { useState } from "react";
-import {
-  SafeAreaView,
-  ScrollView,
-  Dimensions,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import { LineChart } from "react-native-chart-kit";
-import { Rect, Text as TextSVG, Svg } from "react-native-svg";
-const StockChart = (data) => {
-  const mockData = [
-    Math.random() * 100,
-    Math.random() * 100,
-    Math.random() * 100,
-    Math.random() * 100,
-    Math.random() * 100,
-    Math.random() * 100,
-  ];
-  console.log(mockData);
-  let [tooltipPos, setTooltipPos] = useState({
-    x: 0,
-    y: 0,
-    visible: false,
-    value: 0,
-  });
-  console.log("tooltipPos");
-  console.log(tooltipPos);
+import React from "react";
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import { LineChart } from "react-native-gifted-charts";
 
+const data = [
+  { value: 100, label: "Jan" },
+  { value: 110, label: "Feb" },
+  { value: 90, label: "Mar" },
+  { value: 130, label: "Apr" },
+  { value: 80, label: "May" },
+  { value: 103, label: "Jun" },
+];
+
+const StockChart = () => {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={styles.container}>
       <ScrollView style={{ flex: 1 }}>
-        <View>
+        <View style={styles.chartContainer}>
           <LineChart
-            data={{
-              labels: ["January", "February", "March", "April", "May", "June"],
-              datasets: [
-                {
-                  data: [100, 110, 90, 130, 80, 103],
-                },
-              ],
-            }}
-            width={Dimensions.get("window").width}
+            data={data}
+            width={300}
             height={250}
-            yAxisLabel="$"
-            yAxisSuffix="k"
-            yAxisInterval={1}
-            chartConfig={{
-              backgroundColor: "white",
-              backgroundGradientFrom: "#fbfbfb",
-              backgroundGradientTo: "#fbfbfb",
-              decimalPlaces: 2,
-              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-              labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-              style: {
-                borderRadius: 0,
-              },
-              propsForDots: {
-                r: "6",
-                strokeWidth: "0",
-                stroke: "#fbfbfb",
-              },
-            }}
-            style={{
-              marginVertical: 8,
-              borderRadius: 6,
-            }}
-            decorator={() => {
-              return tooltipPos.visible ? (
-                <View>
-                  <Svg>
-                    <Rect
-                      x={tooltipPos.x - 15}
-                      y={tooltipPos.y + 10}
-                      width="40"
-                      height="30"
-                      fill="black"
-                    />
-                    <TextSVG
-                      x={tooltipPos.x + 5}
-                      y={tooltipPos.y + 30}
-                      fill="white"
-                      fontSize="16"
-                      fontWeight="bold"
-                      textAnchor="middle"
-                    >
-                      {tooltipPos.value}
-                    </TextSVG>
-                  </Svg>
+            color="black"
+            thickness={2}
+            yAxisColor="black"
+            xAxisColor="black"
+            yAxisTextStyle={{ color: "black" }}
+            xAxisLabelTextStyle={{ color: "black" }}
+            showPointer
+            pointerConfig={{
+              pointerStripHeight: 140,
+              pointerStripColor: "lightgray",
+              pointerStripWidth: 2,
+              pointerColor: "black",
+              radius: 6,
+              pointerLabelWidth: 60,
+              pointerLabelHeight: 40,
+              activatePointersOnLongPress: false,
+              autoAdjustPointerLabelPosition: true,
+              pointerLabelComponent: (items) => (
+                <View style={styles.tooltip}>
+                  <Text style={styles.tooltipText}>{items[0].value}</Text>
                 </View>
-              ) : null;
-            }}
-            onDataPointClick={(data) => {
-              let isSamePoint =
-                tooltipPos.x === data.x && tooltipPos.y === data.y;
-
-              isSamePoint
-                ? setTooltipPos((previousState) => {
-                    return {
-                      ...previousState,
-                      value: data.value,
-                      visible: !previousState.visible,
-                    };
-                  })
-                : setTooltipPos({
-                    x: data.x,
-                    value: data.value,
-                    y: data.y,
-                    visible: true,
-                  });
+              ),
             }}
           />
         </View>
@@ -116,4 +49,26 @@ const StockChart = (data) => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+  chartContainer: {
+    marginVertical: 8,
+    paddingHorizontal: 16,
+  },
+  tooltip: {
+    backgroundColor: "black",
+    padding: 6,
+    borderRadius: 4,
+  },
+  tooltipText: {
+    color: "white",
+    fontSize: 14,
+    fontWeight: "bold",
+  },
+});
+
 export default StockChart;
