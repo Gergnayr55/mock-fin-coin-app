@@ -1,114 +1,50 @@
 import React from "react";
-import { StyleSheet, View, Image, Text } from "react-native";
+import { View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import StockChart from "./components/StockChart";
+import { Ionicons } from "@expo/vector-icons";
 import Portfolio from "./components/Portfolio";
 import StockContainer from "./components/StockContainer";
-import menuIcon from "./assets/favicon.png";
-import suitcase from "./assets/suitcase.png";
+import StockContextProvider from "./components/State/StockContext";
+import WatchlistProvider from "./components/State/WatchlistContext";
+import ErrorBoundary from "./components/ErrorBoundary";
+import { colors } from "./theme.js";
+import styles, { TAB_ICONS } from "./App.styles.js";
 
 const Tab = createBottomTabNavigator();
 
+const TabIcon = ({ focused, label }) => {
+  const iconName = focused ? TAB_ICONS[label].focused : TAB_ICONS[label].unfocused;
+  const iconColor = focused ? colors.tabActive : colors.tabInactive;
+  return (
+    <View style={styles.tabIcon}>
+      <Ionicons name={iconName} size={22} color={iconColor} />
+      <Text style={[styles.tabLabel, { color: iconColor }]}>{label}</Text>
+    </View>
+  );
+};
+
 export default function App() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={{
-          headerShown: false,
-          tabBarShowLabel: false,
-          tabBarStyle: {
-            position: "absolute",
-            elevation: 0,
-            backgroundColor: "white",
-            borderRadius: 5,
-            height: 90,
-          },
-        }}
-      >
-        <Tab.Screen
-          name="Portfolio"
-          component={Portfolio}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <View style={{ alignItems: "center", justifyContent: "center" }}>
-                <Image
-                  source={menuIcon}
-                  resizeMode="contain"
-                  style={{
-                    width: 17,
-                    height: 17,
-                    tintColor: focused ? "blue" : "gray",
-                  }}
-                />
-                <Text
-                  style={{ color: focused ? "blue" : "gray", fontSize: 10 }}
-                >
-                  Portfolio
-                </Text>
-              </View>
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Watchlist"
-          component={StockContainer}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <View style={{ alignItems: "center", justifyContent: "center" }}>
-                <Image
-                  source={menuIcon}
-                  resizeMode="contain"
-                  style={{
-                    width: 17,
-                    height: 17,
-                    tintColor: focused ? "blue" : "gray",
-                  }}
-                />
-                <Text
-                  style={{ color: focused ? "blue" : "gray", fontSize: 10 }}
-                >
-                  Watchlist
-                </Text>
-              </View>
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Stock Chart"
-          component={StockChart}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <View style={{ alignItems: "center", justifyContent: "center" }}>
-                <Image
-                  source={menuIcon}
-                  resizeMode="contain"
-                  style={{
-                    width: 17,
-                    height: 17,
-                    tintColor: focused ? "blue" : "gray",
-                  }}
-                />
-                <Text
-                  style={{ color: focused ? "blue" : "gray", fontSize: 10 }}
-                >
-                  Stock Chart
-                </Text>
-              </View>
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <ErrorBoundary>
+      <WatchlistProvider>
+        <StockContextProvider>
+          <NavigationContainer>
+            <Tab.Navigator screenOptions={styles.tabNavigator}>
+              <Tab.Screen
+                name="Watchlist"
+                component={Portfolio}
+                options={{ tabBarIcon: ({ focused }) => <TabIcon focused={focused} label="Watchlist" /> }}
+              />
+              <Tab.Screen
+                name="Coins"
+                component={StockContainer}
+                options={{ tabBarIcon: ({ focused }) => <TabIcon focused={focused} label="Coins" /> }}
+              />
+            </Tab.Navigator>
+          </NavigationContainer>
+        </StockContextProvider>
+      </WatchlistProvider>
+    </ErrorBoundary>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

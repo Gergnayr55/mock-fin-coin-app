@@ -1,9 +1,13 @@
-let nf = new Intl.NumberFormat("en-US");
-export function formatDecimals(num) {
-  const formattedNum = nf.format(parseFloat(num).toFixed(2));
+const numberFormatter = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-  if (num && (formattedNum === "1" || !formattedNum.includes("."))) {
-    console.log(formattedNum);
-    return `${formattedNum}.00`;
-  } else return formattedNum;
+export function formatNumber(num) {
+  return numberFormatter.format(parseFloat(num));
+}
+
+export function isTooManyRequests(err) {
+  return (
+    err?.response?.status === 429 ||
+    err?.response?.data?.status?.error_code === 429 ||
+    err?.message === "Network Error"
+  );
 }
