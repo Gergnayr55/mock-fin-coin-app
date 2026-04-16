@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
-import { Text, View, Image, SafeAreaView, Pressable } from "react-native";
+import { Text, View, Image, Pressable } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { StockContext } from "../State/StockContext";
 import { useWatchlist } from "../State/WatchlistContext";

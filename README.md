@@ -20,28 +20,25 @@ A mock cryptocurrency tracking app built with React Native and Expo. Browse the 
 ```bash
 # Install dependencies
 npm install
-
-# Start the Expo dev server
-npx expo start
 ```
 
-From the dev server menu press the key for your target platform:
+### Expo Go (quickest — no build required)
+```bash
+npx expo start
+```
+Press `i` for iOS simulator, `a` for Android emulator, `w` for web, or scan the QR code with the [Expo Go](https://expo.dev/go) app on a physical device.
 
-### Web
-- Press `w` — opens at `http://localhost:8081`
+### Native iOS build (Mac only)
+Requires [Xcode](https://apps.apple.com/us/app/xcode/id497799835) with a simulator runtime installed via Xcode → Settings → Components.
+```bash
+npx expo run:ios
+```
 
-### iOS Simulator (Mac only)
-1. Install [Xcode](https://apps.apple.com/us/app/xcode/id497799835) from the Mac App Store
-2. Open Xcode → Settings → Components and download a simulator
-3. Press `i` in the dev server menu
-
-### Android Emulator
-1. Install [Android Studio](https://developer.android.com/studio)
-2. Open Android Studio → Virtual Device Manager and create an emulator
-3. Start the emulator, then press `a` in the dev server menu
-
-### Physical device
-- Install the [Expo Go](https://expo.dev/go) app and scan the QR code from the dev server
+### Native Android build
+Requires [Android Studio](https://developer.android.com/studio) with an emulator running via Virtual Device Manager.
+```bash
+npx expo run:android
+```
 
 ## Tech stack
 

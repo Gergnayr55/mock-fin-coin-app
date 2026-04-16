@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
-import { View, Text, FlatList, SafeAreaView, ActivityIndicator, TextInput } from "react-native";
+import { View, Text, FlatList, ActivityIndicator, TextInput } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import axios from "axios";
 import { StockContext } from "../State/StockContext";
 import { useNavigation } from "@react-navigation/core";
