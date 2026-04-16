@@ -17,8 +17,9 @@ export const colors = {
 };
 
 export const typography = {
-  coinName: { fontSize: 16, fontWeight: "400" },
-  coinSymbol: { fontSize: 15, fontWeight: "400", color: colors.textSecondary },
+  coinName: { fontSize: 16, fontWeight: "400" as const },
+  coinSymbol: { fontSize: 15, fontWeight: "400" as const, color: colors.textSecondary },
   price: { fontSize: 16 },
+  detailPrice: { fontSize: 15, fontWeight: "500" as const },
   change: { fontSize: 12 },
 };

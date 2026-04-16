@@ -1,14 +1,21 @@
 import React from "react";
-import { View, Text } from "react-native";
-import { formatNumber } from "../../helpers/helpers.js";
-import { colors } from "../../theme.js";
-import { CHART_HEIGHT, TOOLTIP_LABEL_HEIGHT, TOOLTIP_TOP_OFFSET } from "./StockChart.config.js";
+import { View, Text, ViewStyle, TextStyle } from "react-native";
+import { formatNumber } from "../../helpers/helpers";
+import { colors } from "../../theme";
+import { CHART_HEIGHT, TOOLTIP_LABEL_HEIGHT, TOOLTIP_TOP_OFFSET } from "./StockChart.utils";
 
-/**
- * Builds the pointerConfig object for the LineChart.
- * Accepts styles so the tooltip appearance stays co-located with the StyleSheet.
- */
-export const buildPointerConfig = (chartData, styles) => ({
+export interface ChartData {
+  points: { value: number }[];
+  minValue: number;
+  maxValue: number;
+}
+
+interface TooltipStyles {
+  tooltip: ViewStyle;
+  tooltipText: TextStyle;
+}
+
+export const buildPointerConfig = (chartData: ChartData, styles: TooltipStyles) => ({
   pointerStripHeight: CHART_HEIGHT,
   pointerStripColor: colors.primaryLight,
   pointerStripWidth: 2,
@@ -18,7 +25,7 @@ export const buildPointerConfig = (chartData, styles) => ({
   pointerLabelHeight: TOOLTIP_LABEL_HEIGHT,
   activatePointersOnLongPress: false,
   autoAdjustPointerLabelPosition: true,
-  pointerLabelComponent: (items) => {
+  pointerLabelComponent: (items: { value: number }[]) => {
     const val = items[0].value;
     const { minValue, maxValue } = chartData;
     const approxY = CHART_HEIGHT * (1 - (val - minValue) / (maxValue - minValue));

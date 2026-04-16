@@ -3,17 +3,19 @@ import { View, Text, FlatList, SafeAreaView, ActivityIndicator, TextInput } from
 import axios from "axios";
 import { StockContext } from "../State/StockContext";
 import { useNavigation } from "@react-navigation/core";
-import { isTooManyRequests } from "../../helpers/helpers.js";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { isTooManyRequests } from "../../helpers/helpers";
+import { Coin, RootStackParamList } from "../../types/api";
 import CoinRow from "../CoinRow";
-import styles from "./StockList.styles.js";
+import styles from "./StockList.styles";
 
 const StockList = () => {
   const { setStockDetails } = useContext(StockContext);
-  const navigation = useNavigation();
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
-  const [searchVal, setSearchVal] = useState("");
-  const [error, setError] = useState(null);
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [data, setData] = useState<Coin[]>([]);
+  const [searchVal, setSearchVal] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     axios
@@ -35,7 +37,7 @@ const StockList = () => {
     coin.name.toLowerCase().includes(searchVal.toLowerCase())
   );
 
-  const renderItem = useCallback(({ item: coin }) => (
+  const renderItem = useCallback(({ item: coin }: { item: Coin }) => (
     <CoinRow
       coin={coin}
       onPress={() => {
@@ -43,7 +45,7 @@ const StockList = () => {
         navigation.navigate("Details", { id: coin.id });
       }}
     />
-  ), []);
+  ), [setStockDetails, navigation]);
 
   if (loading) {
     return (

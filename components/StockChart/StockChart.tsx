@@ -3,19 +3,19 @@ import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import { LineChart } from "react-native-gifted-charts";
 import axios from "axios";
 import { StockContext } from "../State/StockContext";
-import { isTooManyRequests } from "../../helpers/helpers.js";
-import { colors } from "../../theme.js";
-import { PERIODS, VISIBLE_LABELS, CHART_WIDTH, CHART_HEIGHT, formatLabel } from "./StockChart.config.js";
-import { buildPointerConfig } from "./StockChart.helpers.js";
-import styles from "./StockChart.styles.js";
+import { isTooManyRequests } from "../../helpers/helpers";
+import { colors } from "../../theme";
+import { PERIODS, VISIBLE_LABELS, CHART_WIDTH, CHART_HEIGHT, formatLabel, Period } from "./StockChart.utils";
+import { buildPointerConfig, ChartData } from "./StockChart.helpers";
+import styles from "./StockChart.styles";
 
 const StockChart = () => {
   const { stockDetails } = useContext(StockContext);
-  const [chartData, setChartData] = useState({ points: [], minValue: 0, maxValue: 0 });
-  const [xLabels, setXLabels] = useState([]);
-  const [selectedPeriod, setSelectedPeriod] = useState(PERIODS[0]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [chartData, setChartData] = useState<ChartData>({ points: [], minValue: 0, maxValue: 0 });
+  const [xLabels, setXLabels] = useState<string[]>([]);
+  const [selectedPeriod, setSelectedPeriod] = useState<Period>(PERIODS[0]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!stockDetails?.id) return;
@@ -28,7 +28,7 @@ const StockChart = () => {
 
     axios.get(url)
       .then((response) => {
-        const raw = response.data.prices;
+        const raw: [number, number][] = response.data.prices;
         const lastIndex = raw.length - 1;
         const labelIndices = Array.from({ length: VISIBLE_LABELS }, (_, i) =>
           Math.round((i / (VISIBLE_LABELS - 1)) * lastIndex)
@@ -83,7 +83,6 @@ const StockChart = () => {
         yAxisColor="transparent"
         xAxisColor={colors.axisColor}
         xAxisLabelTextStyle={styles.xLabelText}
-        showPointer
         pointerConfig={buildPointerConfig(chartData, styles)}
       />
       <View style={[styles.xLabelsRow, { width: CHART_WIDTH }]}>

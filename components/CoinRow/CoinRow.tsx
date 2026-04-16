@@ -1,10 +1,16 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import { formatNumber } from "../../helpers/helpers.js";
-import { colors } from "../../theme.js";
-import styles from "./CoinRow.styles.js";
+import { formatNumber } from "../../helpers/helpers";
+import { colors } from "../../theme";
+import { Coin } from "../../types/api";
+import styles from "./CoinRow.styles";
 
-const CoinRow = ({ coin, onPress }) => (
+interface Props {
+  coin: Coin;
+  onPress: () => void;
+}
+
+const CoinRow = ({ coin, onPress }: Props) => (
   <TouchableOpacity onPress={onPress}>
     <View style={styles.row}>
       <Image source={{ uri: coin.image }} style={styles.coinImage} />

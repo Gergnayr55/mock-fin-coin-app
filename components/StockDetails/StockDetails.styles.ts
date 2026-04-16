@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { colors } from "../../theme.js";
+import { colors, typography } from "../../theme";
 
 export default StyleSheet.create({
   container: {
@@ -26,8 +26,7 @@ export default StyleSheet.create({
     flex: 1,
   },
   price: {
-    fontSize: 15,
-    fontWeight: "500",
+    ...typography.detailPrice,
     marginTop: 4,
   },
   starButton: {

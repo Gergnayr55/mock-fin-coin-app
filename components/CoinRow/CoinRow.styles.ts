@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { colors, typography } from "../../theme.js";
+import { colors, typography } from "../../theme";
 
 export default StyleSheet.create({
   row: {

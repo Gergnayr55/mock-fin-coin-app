@@ -1,15 +1,17 @@
 import React, { useContext } from "react";
 import { SafeAreaView, ScrollView, View, Text } from "react-native";
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/native";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { useWatchlist } from "../State/WatchlistContext";
 import { StockContext } from "../State/StockContext";
+import { TabParamList } from "../../types/api";
 import CoinRow from "../CoinRow";
-import styles from "./Portfolio.styles.js";
+import styles from "./Portfolio.styles";
 
 const Portfolio = () => {
   const { watchlist } = useWatchlist();
   const { setStockDetails } = useContext(StockContext);
-  const navigation = useNavigation();
+  const navigation = useNavigation<BottomTabNavigationProp<TabParamList, "Watchlist">>();
 
   return (
     <SafeAreaView style={styles.container}>
