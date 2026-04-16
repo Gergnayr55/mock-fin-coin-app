@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useMemo } from "react";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import { LineChart } from "react-native-gifted-charts";
 import axios from "axios";
@@ -52,6 +52,8 @@ const StockChart = () => {
       });
   }, [stockDetails?.id, selectedPeriod]);
 
+  const pointerConfig = useMemo(() => buildPointerConfig(chartData, styles), [chartData]);
+
   if (loading) {
     return <ActivityIndicator size="large" style={styles.loader} />;
   }
@@ -83,7 +85,7 @@ const StockChart = () => {
         yAxisColor="transparent"
         xAxisColor={colors.axisColor}
         xAxisLabelTextStyle={styles.xLabelText}
-        pointerConfig={buildPointerConfig(chartData, styles)}
+        pointerConfig={pointerConfig}
       />
       <View style={[styles.xLabelsRow, { width: CHART_WIDTH }]}>
         {xLabels.map((label, i) => (

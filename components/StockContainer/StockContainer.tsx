@@ -7,7 +7,7 @@ import { RootStackParamList } from "../../types/api";
 const Stack = createStackNavigator<RootStackParamList>();
 
 const StockContainer = () => (
-  <Stack.Navigator>
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="Coins" component={StockList} />
     <Stack.Screen name="Details" component={StockDetails} />
   </Stack.Navigator>

@@ -29,6 +29,14 @@ export default StyleSheet.create({
     ...typography.detailPrice,
     marginTop: 4,
   },
+  backRow: {
+    paddingHorizontal: 15,
+    paddingTop: 10,
+  },
+  backButton: {
+    alignSelf: "flex-start",
+    padding: 8,
+  },
   starButton: {
     alignSelf: "center",
     padding: 8,

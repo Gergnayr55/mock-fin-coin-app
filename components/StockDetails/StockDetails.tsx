@@ -2,8 +2,11 @@ import React, { useContext } from "react";
 import { Text, View, Image, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import { StockContext } from "../State/StockContext";
 import { useWatchlist } from "../State/WatchlistContext";
+import { RootStackParamList } from "../../types/api";
 import { formatNumber } from "../../helpers/helpers";
 import { colors, typography } from "../../theme";
 import StockChart from "../StockChart";
@@ -12,6 +15,7 @@ import styles from "./StockDetails.styles";
 const StockDetails = () => {
   const { stockDetails } = useContext(StockContext);
   const { isInWatchlist, addToWatchlist, removeFromWatchlist } = useWatchlist();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const inWatchlist = stockDetails?.id ? isInWatchlist(stockDetails.id) : false;
 
@@ -29,6 +33,11 @@ const StockDetails = () => {
       <View style={styles.inner}>
         {stockDetails && (
           <>
+            <View style={styles.backRow}>
+              <Pressable onPress={() => navigation.goBack()} style={styles.backButton}>
+                <Ionicons name="arrow-back" size={24} color={colors.textPrimary} />
+              </Pressable>
+            </View>
             <View style={styles.header}>
               <Image source={{ uri: stockDetails.image }} style={styles.coinImage} />
               <View style={styles.nameCol}>
