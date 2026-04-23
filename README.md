@@ -12,8 +12,7 @@ A mock cryptocurrency tracking app built with React Native and Expo. Browse the 
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org/) (v18 or later)
-- [Expo CLI](https://docs.expo.dev/get-started/installation/) — `npm install -g expo-cli`
+- [Node.js](https://nodejs.org/) (v20.19.4 or later)
 
 ## Running locally
 
@@ -43,9 +42,12 @@ npx expo run:android
 ## Tech stack
 
 - [Expo](https://expo.dev/) SDK 55
+- [React](https://react.dev/) 19.2.0
 - [React Native](https://reactnative.dev/) 0.83
 - [React Navigation](https://reactnavigation.org/) (bottom tabs + stack)
 - [react-native-gifted-charts](https://github.com/Abhinandan-Kushwaha/react-native-gifted-charts) for price charts
+- [expo-linear-gradient](https://docs.expo.dev/versions/latest/sdk/linear-gradient/) for gradient UI
 - [Axios](https://axios-http.com/) for API requests
 - [AsyncStorage](https://react-native-async-storage.github.io/async-storage/) for watchlist persistence
 - [CoinGecko API](https://www.coingecko.com/en/api) (public, no key required)
+- [TypeScript](https://www.typescriptlang.org/) ~5.9
